@@ -4,8 +4,7 @@ import DragIndicatorIcon from "@mui/icons-material/DragIndicator";
 import Divider from "@mui/material/Divider";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
-import StarGray from "./StarGray";
-import StarYellow from "./StarYellow";
+import FavouriteIcon from "./FavouriteIcon";
 
 const Account = (props) => {
   const [open, setOpen] = React.useState(false);
@@ -63,8 +62,7 @@ const Account = (props) => {
             {props.category}
           </div>
         </div>
-        {props.favourite && <StarYellow id={props.id} />}
-        {!props.favourite && <StarGray id={props.id} />}
+        <FavouriteIcon favourite={props.favourite} id={props.id} />
         <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
           <Alert
             onClose={handleClose}

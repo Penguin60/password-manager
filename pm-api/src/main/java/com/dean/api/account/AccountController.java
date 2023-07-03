@@ -27,8 +27,8 @@ public class AccountController {
     }
 
     @PostMapping("/removeAccount")
-    public ResponseEntity<String> removeAccount(@RequestParam("deleteId") String deleteId) {
-        return ResponseEntity.ok(accountService.removeAccount(Integer.valueOf(deleteId)));
+    public ResponseEntity<String> removeAccount(Integer id) {
+        return ResponseEntity.ok(accountService.removeAccount(id));
     }
 
     @PostMapping("/editAccount")
