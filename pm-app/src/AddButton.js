@@ -13,11 +13,11 @@ import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
 import Autocomplete from "@mui/material/Autocomplete";
 
-const AddButton = () => {
+const AddButton = ({ onUpdate }) => {
   const [open, setOpen] = React.useState(false);
   const [alertOpen, setAlertOpen] = React.useState(false);
   const [categories, setCategories] = useState([]);
-  const [inputValue, setInputValue] = React.useState('');
+  const [inputValue, setInputValue] = React.useState("");
 
   const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -40,7 +40,7 @@ const AddButton = () => {
     userName: "",
     password: "",
     category: "",
-    favourite: ""
+    favourite: "",
   });
 
   const handleChange = (event) => {
@@ -59,11 +59,17 @@ const AddButton = () => {
     newAccountFormData.append("category", inputValue);
     newAccountFormData.set("favourite", false);
 
-    axios.post("http://192.168.11.11:8080/account/newAccount", newAccountFormData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
+    axios
+      .post(
+        "http://192.168.11.11:8080/account/newAccount",
+        newAccountFormData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      )
+      .then(() => onUpdate());
     setOpen(false);
     setAlertOpen(true);
   };
@@ -73,7 +79,6 @@ const AddButton = () => {
       .then((response) => response.json())
       .then((data) => setCategories(data));
   }, []);
-
 
   return (
     <>
@@ -119,9 +124,9 @@ const AddButton = () => {
               options={categories}
               freeSolo
               inputValue={inputValue}
-        onInputChange={(event, newInputValue) => {
-          setInputValue(newInputValue);
-        }}
+              onInputChange={(event, newInputValue) => {
+                setInputValue(newInputValue);
+              }}
               renderInput={(params) => (
                 <TextField
                   {...params}

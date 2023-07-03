@@ -5,10 +5,10 @@ import axios from "axios";
 import { useState } from "react";
 
 const FavouriteIcon = (props) => {
-    const [updatedFav, setUpdatedFac] = useState(props.favourite);
+  const [updatedFav, setUpdatedFac] = useState(props.favourite);
 
   const favouriteAccount = () => {
-    setUpdatedFac(updatedFav => !updatedFav);
+    setUpdatedFac((updatedFav) => !updatedFav);
     const favouriteAccountFormData = new FormData();
 
     const currentId = props.id;
@@ -28,7 +28,7 @@ const FavouriteIcon = (props) => {
 
   return (
     <>
-      {(updatedFav) && (
+      {updatedFav && (
         <IconButton
           color="disabled"
           aria-label="upload picture"

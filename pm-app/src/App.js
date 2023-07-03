@@ -1,6 +1,5 @@
 import "./App.css";
 import React, { useState, useEffect, useCallback } from "react";
-import AddButton from "./AddButton";
 import AccountDisplay from "./AccountsDisplay";
 import SearchBar from "./SearchBar";
 
@@ -24,13 +23,12 @@ function App() {
           })
         )
       );
-  }; 
+  };
 
   return (
     <div className="App">
       <SearchBar txt={searchStr} onChange={onSearchBarChange} />
       <AccountDisplay accounts={accounts} setAccounts={setAccounts} />
-      <AddButton />
     </div>
   );
 }
