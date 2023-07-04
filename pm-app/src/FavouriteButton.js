@@ -4,7 +4,7 @@ import IconButton from "@mui/material/IconButton";
 import axios from "axios";
 import { useState } from "react";
 
-const FavouriteIcon = (props) => {
+const FavouriteButton = (props) => {
   const [updatedFav, setUpdatedFac] = useState(props.favourite);
 
   const favouriteAccount = () => {
@@ -16,7 +16,7 @@ const FavouriteIcon = (props) => {
     favouriteAccountFormData.append("id", currentId);
 
     axios.post(
-      "http://192.168.11.11:8080/account/favouriteAccount",
+      "http://localhost:8080/account/favouriteAccount",
       favouriteAccountFormData,
       {
         headers: {
@@ -56,4 +56,4 @@ const FavouriteIcon = (props) => {
   );
 };
 
-export default FavouriteIcon;
+export default FavouriteButton;

@@ -50,7 +50,6 @@ body::-webkit-scrollbar {
   border-radius: 10px;
   margin-top: 10px;
   box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.12);
-  cursor: pointer;
 }
 .accountText {
   display: grid;
@@ -86,7 +85,7 @@ body::-webkit-scrollbar {
 .accountName {
   font-size: 20px;
   position: relative;
-  bottom: 7px;
+  bottom: 18px;
 }
 
 .accountName:hover {
@@ -96,7 +95,7 @@ body::-webkit-scrollbar {
 .accountUsername {
   font-size: 20px;
   position: relative;
-  bottom: 7px;
+  bottom: 18px;
 }
 
 .accountUsername:hover {
@@ -106,7 +105,7 @@ body::-webkit-scrollbar {
 .accountPassword {
   font-size: 20px;
   position: relative;
-  bottom: 7px;
+  bottom: 18px;
 }
 
 .accountPassword:hover {
@@ -116,7 +115,7 @@ body::-webkit-scrollbar {
 .accountCategory {
   font-size: 20px;
   position: relative;
-  bottom: 7px;
+  bottom: 18px;
 }
 
 .accountCategory:hover {
@@ -125,16 +124,28 @@ body::-webkit-scrollbar {
 
 .textDivider {
   height: 50px !important;
-  margin-top: -17px !important;
+  margin-top: -28px !important;
 }
 
 .favoriteButton {
   position: relative;
-  top: -54px;
+  bottom: 55px;
   left: 800px;
 }
 
 .createFavouriteButton {
   position: relative;
   bottom: 20px;
+}
+
+.deleteButton {
+  position: relative;
+  left: 863px;
+  bottom: 53px;
+  color: rgb(129, 133, 130)
+}
+
+.deleteButton:hover {
+  color: rgb(180, 0, 0);
+  cursor: pointer;
 }

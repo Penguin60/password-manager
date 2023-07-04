@@ -6,14 +6,14 @@ import AddButton from "./AddButton";
 const AccountDisplay = ({ accounts, setAccounts }) => {
 
   useEffect(() => {
-      fetch("http://192.168.11.11:8080/account/getAccounts")
+      fetch("http://localhost:8080/account/getAccounts")
         .then((response) => response.json())
         .then((data) => setAccounts(data));
   }, []);
 
-  const getAccounts = () => {
+  const updateAccounts = () => {
 
-      fetch("http://192.168.11.11:8080/account/getAccounts")
+      fetch("http://localhost:8080/account/getAccounts")
         .then((response) => response.json())
         .then((data) => {
           console.log(data);
@@ -31,9 +31,10 @@ const AccountDisplay = ({ accounts, setAccounts }) => {
           password={account.password}
           category={account.category}
           favourite={account.favourite}
+          onUpdate={updateAccounts}
         />
       ))}
-      <AddButton onUpdate={getAccounts}/>
+      <AddButton onUpdate={updateAccounts}/>
     </>
   );
 };

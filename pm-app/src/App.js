@@ -11,7 +11,7 @@ function App() {
     const lowerSearchStr = searchTarget.toLowerCase();
 
     setSearchStr(lowerSearchStr);
-    fetch("http://192.168.11.11:8080/account/getAccounts")
+    fetch("http://localhost:8080/account/getAccounts")
       .then((response) => response.json())
       .then((data) =>
         setAccounts(

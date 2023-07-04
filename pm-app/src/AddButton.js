@@ -61,7 +61,7 @@ const AddButton = ({ onUpdate }) => {
 
     axios
       .post(
-        "http://192.168.11.11:8080/account/newAccount",
+        "http://localhost:8080/account/newAccount",
         newAccountFormData,
         {
           headers: {
@@ -75,7 +75,7 @@ const AddButton = ({ onUpdate }) => {
   };
 
   useEffect(() => {
-    fetch("http://192.168.11.11:8080/account/getCategories")
+    fetch("http://localhost:8080/account/getCategories")
       .then((response) => response.json())
       .then((data) => setCategories(data));
   }, []);

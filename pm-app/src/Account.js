@@ -4,7 +4,8 @@ import DragIndicatorIcon from "@mui/icons-material/DragIndicator";
 import Divider from "@mui/material/Divider";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
-import FavouriteIcon from "./FavouriteIcon";
+import FavouriteButton from "./FavouriteButton";
+import DeleteButton from "./DeleteButton";
 
 const Account = (props) => {
   const [open, setOpen] = React.useState(false);
@@ -29,6 +30,7 @@ const Account = (props) => {
   return (
     <div className="accounts">
       <div key={props.id} className="account" id={props.id} type="div">
+      <DeleteButton id={props.id} onUpdate={props.onUpdate}/>
         <DragIndicatorIcon className="dragIndicator" />
         <div className="accountText">
           <div className="accountName" type="div" onClick={copyAccountText}>
@@ -62,7 +64,7 @@ const Account = (props) => {
             {props.category}
           </div>
         </div>
-        <FavouriteIcon favourite={props.favourite} id={props.id} />
+        <FavouriteButton favourite={props.favourite} id={props.id} />
         <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
           <Alert
             onClose={handleClose}
