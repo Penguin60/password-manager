@@ -1,4 +1,3 @@
-import "./App.css";
 import React, { useState, useEffect, useCallback } from "react";
 import DragIndicatorIcon from "@mui/icons-material/DragIndicator";
 import Divider from "@mui/material/Divider";
@@ -6,6 +5,7 @@ import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
 import FavouriteButton from "./FavouriteButton";
 import DeleteButton from "./DeleteButton";
+import Password from "./Password";
 
 const Account = (props) => {
   const [open, setOpen] = React.useState(false);
@@ -30,7 +30,7 @@ const Account = (props) => {
   return (
     <div className="accounts">
       <div key={props.id} className="account" id={props.id} type="div">
-      <DeleteButton id={props.id} onUpdate={props.onUpdate}/>
+        <DeleteButton id={props.id} onUpdate={props.onUpdate} />
         <DragIndicatorIcon className="dragIndicator" />
         <div className="accountText">
           <div className="accountName" type="div" onClick={copyAccountText}>
@@ -51,9 +51,7 @@ const Account = (props) => {
             flexItem
             className="textDivider"
           />
-          <div className="accountPassword" type="div" onClick={copyAccountText}>
-            {props.password}
-          </div>
+          <Password password={props.password} id={props.id}/>
           <Divider
             orientation="vertical"
             variant="middle"

@@ -3,6 +3,7 @@ package com.dean.api.account;
 import com.dean.api.model.Account;
 import com.dean.api.service.AccountService;
 import lombok.AllArgsConstructor;
+import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -44,6 +45,16 @@ public class AccountController {
     @PostMapping("/favouriteAccount")
     public ResponseEntity<String> favouriteAccount(Integer id) {
         return ResponseEntity.ok(accountService.favouriteAccount(id));
+    }
+
+    @PostMapping("/validatePassword")
+    public ResponseEntity<Boolean> validatePassword(String password) {
+        return ResponseEntity.ok(accountService.validatePassword(password));
+    }
+
+    @PostMapping("/returnPassword")
+    public ResponseEntity<String> returnPassword(Integer id) {
+        return ResponseEntity.ok(accountService.returnPassword(id));
     }
 
 }

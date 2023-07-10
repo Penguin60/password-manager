@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -79,5 +80,22 @@ public class AccountServiceImpl implements AccountService{
         accountRepository.save(account);
 
         return String.valueOf(status);
+    }
+
+    @Override
+    public Boolean validatePassword(String password) {
+
+        boolean result = false;
+
+        if (Objects.equals(password, "8xn8wvpm")) {
+            result = true;
+        }
+
+        return result;
+    }
+
+    @Override
+    public String returnPassword(Integer id) {
+        return accountRepository.findById(id).get().getPassword();
     }
 }

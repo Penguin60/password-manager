@@ -1,4 +1,3 @@
-import "./App.css";
 import React, { useState, useEffect, useCallback } from "react";
 import Account from "./Account";
 import AddButton from "./AddButton";

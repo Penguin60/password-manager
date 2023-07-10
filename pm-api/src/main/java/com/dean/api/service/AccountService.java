@@ -19,4 +19,8 @@ public interface AccountService {
 
     String favouriteAccount(Integer id);
 
+    Boolean validatePassword(String password);
+
+    String returnPassword(Integer id);
+
 }
