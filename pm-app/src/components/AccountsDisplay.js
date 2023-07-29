@@ -4,24 +4,8 @@ import AddButton from "./AddButton";
 
 const AccountDisplay = ({ accounts, setAccounts }) => {
 
-  useEffect(() => {
-      fetch("http://localhost:8080/account/getAccounts")
-        .then((response) => response.json())
-        .then((data) => setAccounts(data));
-  }, []);
-
-  const updateAccounts = () => {
-
-      fetch("http://localhost:8080/account/getAccounts")
-        .then((response) => response.json())
-        .then((data) => {
-          console.log(data);
-          setAccounts(data)
-        })
-  }
-
   return (
-    <>
+    <div className="accounts">
       {accounts.map((account) => (
         <Account
           id={account.id}
@@ -30,11 +14,11 @@ const AccountDisplay = ({ accounts, setAccounts }) => {
           password={account.password}
           category={account.category}
           favourite={account.favourite}
-          onUpdate={updateAccounts}
+          setAccounts={setAccounts}
         />
       ))}
-      <AddButton onUpdate={updateAccounts}/>
-    </>
+      <AddButton setAccounts={setAccounts}/>
+    </div>
   );
 };
 

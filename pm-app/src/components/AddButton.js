@@ -7,12 +7,14 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import Button from "@mui/material/Button";
-import axios from "axios";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
 import Autocomplete from "@mui/material/Autocomplete";
+import { addAccount } from "../FirebaseFunctions";
+import { loadAccounts } from "../FirebaseFunctions";
+import { loadCategories } from "../FirebaseFunctions";
 
-const AddButton = ({ onUpdate }) => {
+const AddButton = ({ setAccounts }) => {
   const [open, setOpen] = React.useState(false);
   const [alertOpen, setAlertOpen] = React.useState(false);
   const [categories, setCategories] = useState([]);
@@ -50,33 +52,24 @@ const AddButton = ({ onUpdate }) => {
   };
 
   const newAccount = () => {
-    const newAccountFormData = new FormData();
-
-    newAccountFormData.append("name", formValue.name);
-    newAccountFormData.append("userName", formValue.userName);
-    newAccountFormData.append("password", formValue.password);
-    newAccountFormData.append("category", inputValue);
-    newAccountFormData.set("favourite", false);
-
-    axios
-      .post(
-        "http://localhost:8080/account/newAccount",
-        newAccountFormData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      )
-      .then(() => onUpdate());
+    addAccount(
+      formValue.name,
+      formValue.userName,
+      formValue.password,
+      inputValue
+    );
     setOpen(false);
     setAlertOpen(true);
+
+    loadAccounts().then((value) => {
+      setAccounts(value);
+    });
   };
 
   useEffect(() => {
-    fetch("http://localhost:8080/account/getCategories")
-      .then((response) => response.json())
-      .then((data) => setCategories(data));
+    loadCategories().then((key) => {
+      setCategories(key)
+    })
   }, []);
 
   return (
@@ -144,11 +137,21 @@ const AddButton = ({ onUpdate }) => {
         </DialogContent>
 
         <DialogActions>
-          <Button onClick={handleClose} variant="outlined" color="success">
+          <Button
+            onClick={handleClose}
+            variant="text"
+            color="success"
+            className="button"
+          >
             Cancel
           </Button>
-          <Button onClick={newAccount} variant="contained" color="success">
-            Create
+          <Button
+            onClick={newAccount}
+            variant="contained"
+            color="success"
+            className="button"
+          >
+            Ok
           </Button>
         </DialogActions>
       </Dialog>

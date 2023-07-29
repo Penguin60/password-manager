@@ -47,7 +47,7 @@ body::-webkit-scrollbar {
   width: 95%;
   height: 90px;
   background-color: #ffffff;
-  border-radius: 10px;
+  border-radius: 25px;
   margin-top: 10px;
   box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.12);
 }
@@ -148,4 +148,14 @@ body::-webkit-scrollbar {
 .deleteButton:hover {
   color: rgb(180, 0, 0);
   cursor: pointer;
+}
+
+.password {
+  position: relative;
+  bottom: 17px;
+}
+
+.button {
+  border-radius: 50px !important;
+  font-weight: bold !important;
 }

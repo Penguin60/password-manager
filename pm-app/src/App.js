@@ -2,10 +2,17 @@ import "./App.css";
 import React, { useState, useEffect, useCallback } from "react";
 import AccountDisplay from "./components/AccountsDisplay";
 import SearchBar from "./components/SearchBar";
+import { loadAccounts } from "./FirebaseFunctions";
 
 function App() {
   const [accounts, setAccounts] = useState([]);
   const [searchStr, setSearchStr] = useState("");
+
+  useEffect(() => {
+    loadAccounts().then((value) => {
+      setAccounts(value)
+    })
+  }, []);
 
   const onSearchBarChange = async (searchTarget) => {
     const lowerSearchStr = searchTarget.toLowerCase();
@@ -28,7 +35,7 @@ function App() {
   return (
     <div className="App">
       <SearchBar txt={searchStr} onChange={onSearchBarChange} />
-      <AccountDisplay accounts={accounts} setAccounts={setAccounts} />
+      <AccountDisplay accounts={accounts} setAccounts={setAccounts}/>
     </div>
   );
 }

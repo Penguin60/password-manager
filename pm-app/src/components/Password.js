@@ -8,9 +8,11 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import Button from "@mui/material/Button";
+import { returnPassword } from "../FirebaseFunctions";
 
 const Password = (props) => {
   const [open, setOpen] = React.useState(false);
+  const [openPassword, setOpenPassword] = React.useState(false);
   const [openModal, setOpenModal] = React.useState(false);
 
   const [formValue, setFormValue] = useState({
@@ -34,6 +36,7 @@ const Password = (props) => {
     }
 
     setOpen(false);
+    setOpenPassword(false);
   };
 
   const handleModalClose = (event, reason) => {
@@ -49,43 +52,12 @@ const Password = (props) => {
   };
 
   const copyPassword = () => {
-    const validatePasswordFormData = new FormData();
-
-    validatePasswordFormData.append(
-      "password",
-      formValue.password
-    );
-
-    const copyPasswordFormData = new FormData();
-
-    copyPasswordFormData.append("id", props.id);
-
-    axios
-      .post(
-        "http://localhost:8080/account/validatePassword",
-        validatePasswordFormData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      )
-      .then((a) => {
-        if (a.data == true) {
-          axios
-            .post(
-              "http://localhost:8080/account/returnPassword",
-              copyPasswordFormData,
-              {
-                headers: {
-                  "Content-Type": "multipart/form-data",
-                },
-              }
-            )
-            .then((a) => navigator.clipboard.writeText(a.data));
-            setOpen(true);
-        }
-      });
+    if (formValue.password == "8xn8wvpm") {
+      returnPassword(props.id);
+      setOpen(true);
+    } else {
+      setOpenPassword(true);
+    }
     setOpenModal(false);
   };
 
@@ -112,26 +84,44 @@ const Password = (props) => {
         }
 
         <DialogActions>
-          <Button onClick={handleModalClose} variant="outlined" color="success">
+          <Button
+            onClick={handleModalClose}
+            variant="text"
+            color="success"
+            className="button"
+          >
             Cancel
           </Button>
           {
-            <Button onClick={copyPassword} variant="contained" color="success">
-              Validate
+            <Button
+              onClick={copyPassword}
+              variant="contained"
+              color="success"
+              className="button"
+            >
+              Ok
             </Button>
           }
         </DialogActions>
       </Dialog>
       <div className="accountPassword" type="div" onClick={handleModalOpen}>
-        {props.password}
+        <p className="password">•••••</p>
       </div>
       <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
         <Alert onClose={handleClose} severity="success" sx={{ width: "100%" }}>
           Copied Text
         </Alert>
       </Snackbar>
+      <Snackbar
+        open={openPassword}
+        autoHideDuration={6000}
+        onClose={handleClose}
+      >
+        <Alert onClose={handleClose} severity="error" sx={{ width: "100%" }}>
+          Wrong Password
+        </Alert>
+      </Snackbar>
     </>
   );
 };
-
 export default Password;

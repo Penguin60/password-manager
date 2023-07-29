@@ -1,29 +1,19 @@
 import DeleteIcon from "@mui/icons-material/Delete";
 import IconButton from "@mui/material/IconButton";
-import axios from "axios";
+import { deleteAccount } from "../FirebaseFunctions";
+import { loadAccounts } from "../FirebaseFunctions";
 
-const DeleteButton = ({ id, onUpdate }) => {
-  const deleteAccount = () => {
-    const deleteAccountFormData = new FormData();
-
-    deleteAccountFormData.append("id", id);
-
-    axios
-      .post(
-        "http://localhost:8080/account/removeAccount",
-        deleteAccountFormData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      )
-      .then(() => onUpdate());
+const DeleteButton = ({ id, setAccounts }) => {
+  const clickHandler = () => {
+    deleteAccount(id);
+    loadAccounts().then((value) => {
+      setAccounts(value)
+    })
   };
 
   return (
     <>
-      <IconButton className="deleteButton" onClick={deleteAccount}>
+      <IconButton className="deleteButton" onClick={clickHandler}>
         <DeleteIcon />
       </IconButton>
     </>

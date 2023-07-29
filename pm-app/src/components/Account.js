@@ -30,7 +30,7 @@ const Account = (props) => {
   return (
     <div className="accounts">
       <div key={props.id} className="account" id={props.id} type="div">
-        <DeleteButton id={props.id} onUpdate={props.onUpdate} />
+        <DeleteButton id={props.id} setAccounts={props.setAccounts}/>
         <DragIndicatorIcon className="dragIndicator" />
         <div className="accountText">
           <div className="accountName" type="div" onClick={copyAccountText}>
@@ -51,7 +51,7 @@ const Account = (props) => {
             flexItem
             className="textDivider"
           />
-          <Password password={props.password} id={props.id}/>
+          <Password password={props.password} id={props.id} />
           <Divider
             orientation="vertical"
             variant="middle"
