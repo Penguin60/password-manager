@@ -37,14 +37,14 @@ body::-webkit-scrollbar {
   grid-template-rows: auto;
   gap: 40px 25px;
   padding: 10px;
-  margin-left: 4.5%;
+  margin-left: 2%;
   align-content: center;
   margin-top: 30px;
   margin-bottom: 10px;
 }
 
 .account {
-  width: 95%;
+  width: 96%;
   height: 90px;
   background-color: #ffffff;
   border-radius: 25px;

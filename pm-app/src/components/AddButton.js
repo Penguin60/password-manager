@@ -19,6 +19,10 @@ const AddButton = ({ setAccounts }) => {
   const [alertOpen, setAlertOpen] = React.useState(false);
   const [categories, setCategories] = useState([]);
   const [inputValue, setInputValue] = React.useState("");
+  const [nameError, setNameError] = React.useState("");
+  const [userNameError, setUserNameError] = React.useState("");
+  const [passwordError, setPasswordError] = React.useState("");
+  const [categoryError, setCategoryError] = React.useState("");
 
   const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -52,24 +56,31 @@ const AddButton = ({ setAccounts }) => {
   };
 
   const newAccount = () => {
-    addAccount(
-      formValue.name,
-      formValue.userName,
-      formValue.password,
-      inputValue
-    );
-    setOpen(false);
-    setAlertOpen(true);
+    if (
+      formValue.name.length > 0 &&
+      formValue.userName.length > 0 &&
+      formValue.password.length > 0 &&
+      formValue.category.length > 0
+    ) {
+      addAccount(
+        formValue.name,
+        formValue.userName,
+        formValue.password,
+        inputValue
+      );
+      setOpen(false);
+      setAlertOpen(true);
 
-    loadAccounts().then((value) => {
-      setAccounts(value);
-    });
+      loadAccounts().then((value) => {
+        setAccounts(value);
+      });
+    }
   };
 
   useEffect(() => {
     loadCategories().then((key) => {
-      setCategories(key)
-    })
+      setCategories(key);
+    });
   }, []);
 
   return (
@@ -82,6 +93,8 @@ const AddButton = ({ setAccounts }) => {
         <DialogContent>
           <form onSubmit={newAccount}>
             <TextField
+              error={formValue.name.length > 0 ? false : true}
+              required
               autoFocus
               margin="dense"
               label="Name"
@@ -92,6 +105,8 @@ const AddButton = ({ setAccounts }) => {
               name="name"
             />
             <TextField
+              error={formValue.userName.length > 0 ? false : true}
+              required
               autoFocus
               margin="dense"
               label="Username"
@@ -102,6 +117,8 @@ const AddButton = ({ setAccounts }) => {
               name="userName"
             />
             <TextField
+              error={formValue.password.length > 0 ? false : true}
+              required
               autoFocus
               margin="dense"
               label="Password"
@@ -121,6 +138,8 @@ const AddButton = ({ setAccounts }) => {
               }}
               renderInput={(params) => (
                 <TextField
+                  error={formValue.category.length > 0 ? false : true}
+                  required
                   {...params}
                   autoFocus
                   margin="dense"
