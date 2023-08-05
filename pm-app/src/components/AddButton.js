@@ -56,12 +56,8 @@ const AddButton = ({ setAccounts }) => {
   };
 
   const newAccount = () => {
-    if (
-      formValue.name.length > 0 &&
-      formValue.userName.length > 0 &&
-      formValue.password.length > 0 &&
-      formValue.category.length > 0
-    ) {
+
+    if (formValue.name != "" && formValue.userName != "" && formValue.password != "" && formValue.category != "" && formValue.name.length <=50 && formValue.userName.length <=50 && formValue.password.length <=50 && formValue.category.length <=50) {
       addAccount(
         formValue.name,
         formValue.userName,
@@ -70,11 +66,12 @@ const AddButton = ({ setAccounts }) => {
       );
       setOpen(false);
       setAlertOpen(true);
-
+  
       loadAccounts().then((value) => {
         setAccounts(value);
       });
     }
+    
   };
 
   useEffect(() => {
@@ -93,7 +90,7 @@ const AddButton = ({ setAccounts }) => {
         <DialogContent>
           <form onSubmit={newAccount}>
             <TextField
-              error={formValue.name.length > 0 ? false : true}
+              error={formValue.name == "" || formValue.name.length > 50? true : false}
               required
               autoFocus
               margin="dense"
@@ -105,7 +102,7 @@ const AddButton = ({ setAccounts }) => {
               name="name"
             />
             <TextField
-              error={formValue.userName.length > 0 ? false : true}
+              error={formValue.userName == "" || formValue.userName.length > 50 ? true : false}
               required
               autoFocus
               margin="dense"
@@ -117,7 +114,7 @@ const AddButton = ({ setAccounts }) => {
               name="userName"
             />
             <TextField
-              error={formValue.password.length > 0 ? false : true}
+              error={formValue.password == "" || formValue.password.length > 50 ? true : false}
               required
               autoFocus
               margin="dense"
@@ -138,7 +135,7 @@ const AddButton = ({ setAccounts }) => {
               }}
               renderInput={(params) => (
                 <TextField
-                  error={formValue.category.length > 0 ? false : true}
+                  error={formValue.category == "" || formValue.category.length > 50 ? true : false}
                   required
                   {...params}
                   autoFocus
