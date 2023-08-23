@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
-import Account from "./Account";
+import Account from "./Account/Account";
 import AddButton from "./AddButton";
 
 const AccountDisplay = ({ accounts, setAccounts }) => {

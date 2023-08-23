@@ -2,7 +2,7 @@ import StarBorderIcon from "@mui/icons-material/StarBorder";
 import StarIcon from "@mui/icons-material/Star";
 import IconButton from "@mui/material/IconButton";
 import { useState } from "react";
-import { favouriteAccount } from "../FirebaseFunctions";
+import { favouriteAccount } from "../firebase/FirebaseFunctions";
 
 const FavouriteButton = (props) => {
   const [updatedFav, setUpdatedFav] = useState(props.favourite);

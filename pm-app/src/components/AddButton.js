@@ -10,19 +10,14 @@ import Button from "@mui/material/Button";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
 import Autocomplete from "@mui/material/Autocomplete";
-import { addAccount } from "../FirebaseFunctions";
-import { loadAccounts } from "../FirebaseFunctions";
-import { loadCategories } from "../FirebaseFunctions";
+import { addAccount, loadAccounts, loadCategories } from "../firebase/FirebaseFunctions";
 
 const AddButton = ({ setAccounts }) => {
   const [open, setOpen] = React.useState(false);
   const [alertOpen, setAlertOpen] = React.useState(false);
   const [categories, setCategories] = useState([]);
   const [inputValue, setInputValue] = React.useState("");
-  const [nameError, setNameError] = React.useState("");
-  const [userNameError, setUserNameError] = React.useState("");
-  const [passwordError, setPasswordError] = React.useState("");
-  const [categoryError, setCategoryError] = React.useState("");
+  const [valid, setValid] = React.useState(true);
 
   const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -34,6 +29,7 @@ const AddButton = ({ setAccounts }) => {
 
   const handleClose = () => {
     setOpen(false);
+    setValid(true);
   };
 
   const handleAlertClose = () => {
@@ -56,8 +52,16 @@ const AddButton = ({ setAccounts }) => {
   };
 
   const newAccount = () => {
-
-    if (formValue.name != "" && formValue.userName != "" && formValue.password != "" && formValue.category != "" && formValue.name.length <=50 && formValue.userName.length <=50 && formValue.password.length <=50 && formValue.category.length <=50) {
+    if (
+      formValue.name.trim() != "" &&
+      formValue.userName.trim() != "" &&
+      formValue.password.trim() != "" &&
+      formValue.category.trim() != "" &&
+      formValue.name.length <= 50 &&
+      formValue.userName.length <= 50 &&
+      formValue.password.length <= 50 &&
+      formValue.category.length <= 50
+    ) {
       addAccount(
         formValue.name,
         formValue.userName,
@@ -66,12 +70,14 @@ const AddButton = ({ setAccounts }) => {
       );
       setOpen(false);
       setAlertOpen(true);
-  
+
       loadAccounts().then((value) => {
         setAccounts(value);
       });
+      setValid(true);
+    } else {
+      setValid(false);
     }
-    
   };
 
   useEffect(() => {
@@ -90,7 +96,7 @@ const AddButton = ({ setAccounts }) => {
         <DialogContent>
           <form onSubmit={newAccount}>
             <TextField
-              error={formValue.name == "" || formValue.name.length > 50? true : false}
+              error={!valid}
               required
               autoFocus
               margin="dense"
@@ -102,7 +108,7 @@ const AddButton = ({ setAccounts }) => {
               name="name"
             />
             <TextField
-              error={formValue.userName == "" || formValue.userName.length > 50 ? true : false}
+              error={!valid}
               required
               autoFocus
               margin="dense"
@@ -114,7 +120,7 @@ const AddButton = ({ setAccounts }) => {
               name="userName"
             />
             <TextField
-              error={formValue.password == "" || formValue.password.length > 50 ? true : false}
+              error={!valid}
               required
               autoFocus
               margin="dense"
@@ -135,7 +141,7 @@ const AddButton = ({ setAccounts }) => {
               }}
               renderInput={(params) => (
                 <TextField
-                  error={formValue.category == "" || formValue.category.length > 50 ? true : false}
+                  error={!valid}
                   required
                   {...params}
                   autoFocus

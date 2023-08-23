@@ -2,7 +2,7 @@ import "./App.css";
 import React, { useState, useEffect, useCallback } from "react";
 import AccountDisplay from "./components/AccountsDisplay";
 import SearchBar from "./components/SearchBar";
-import { loadAccounts } from "./FirebaseFunctions";
+import { loadAccounts } from "./firebase/FirebaseFunctions";
 
 function App() {
   const [accounts, setAccounts] = useState([]);
