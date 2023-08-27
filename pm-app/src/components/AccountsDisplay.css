@@ -1,0 +1,11 @@
+.accounts {
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: auto;
+    gap: 40px 25px;
+    padding: 10px;
+    margin-left: 2%;
+    align-content: center;
+    margin-top: 30px;
+    margin-bottom: 10px;
+  }

@@ -1,0 +1,8 @@
+#addGUI {
+    position: absolute;
+    width: 40%;
+    left: 30%;
+    height: 60%;
+    top: 20%;
+    visibility: hidden;
+  }

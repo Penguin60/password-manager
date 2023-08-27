@@ -1,14 +1,14 @@
 import React, { useState, useEffect, useCallback } from "react";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
-import axios from "axios";
 import TextField from "@mui/material/TextField";
-import Dialog, { DialogProps } from "@mui/material/Dialog";
+import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import Button from "@mui/material/Button";
 import { returnPassword } from "../../firebase/FirebaseFunctions";
+import "./Password.css";
 
 const Password = (props) => {
   const [open, setOpen] = React.useState(false);

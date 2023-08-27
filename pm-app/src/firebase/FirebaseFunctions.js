@@ -41,11 +41,11 @@ export const addAccount = async (name, userName, password, category) => {
   });
 };
 
-export const favouriteAccount = (id, updatedFav, setUpdatedFav) => {
+export const favouriteAccount = (id, favourited, setFavourited) => {
   const accountRef = doc(db, "accounts", id);
 
-  setDoc(accountRef, { favourite: !updatedFav }, { merge: true });
-  setUpdatedFav(!updatedFav);
+  setDoc(accountRef, { favourite: !favourited }, { merge: true });
+  setFavourited(!favourited);
 };
 
 export const deleteAccount = async (id) => {

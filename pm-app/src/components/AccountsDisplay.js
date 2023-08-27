@@ -1,9 +1,7 @@
-import React, { useState, useEffect, useCallback } from "react";
 import Account from "./Account/Account";
-import AddButton from "./AddButton";
+import "./AccountsDisplay.css";
 
-const AccountDisplay = ({ accounts, setAccounts }) => {
-
+const AccountDisplay = ({ accounts }) => {
   return (
     <div className="accounts">
       {accounts.map((account) => (
@@ -14,10 +12,9 @@ const AccountDisplay = ({ accounts, setAccounts }) => {
           password={account.password}
           category={account.category}
           favourite={account.favourite}
-          setAccounts={setAccounts}
+          key={account.id}
         />
       ))}
-      <AddButton setAccounts={setAccounts}/>
     </div>
   );
 };
