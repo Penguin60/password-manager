@@ -21,19 +21,18 @@ function App() {
     const lowerSearchStr = searchTarget.toLowerCase();
 
     setSearchStr(lowerSearchStr);
-    if(lowerSearchStr) {
+    if (lowerSearchStr) {
       setFilteredAccounts(
         accounts.filter((account) => {
           return (
             account.name.toLowerCase().includes(lowerSearchStr) ||
             account.category.toLowerCase().includes(lowerSearchStr)
           );
-        }) 
-    )
+        })
+      );
     } else {
       setFilteredAccounts(accounts);
     }
-    
   };
 
   const refreshAccountsHandler = () => {
@@ -47,7 +46,10 @@ function App() {
     <div className="App">
       <SearchBar txt={searchStr} onChange={searchBarChangeHandler} />
       <AddButton onFormSubmit={refreshAccountsHandler} />
-      <AccountDisplay accounts={filteredAccounts} />
+      <AccountDisplay
+        accounts={filteredAccounts}
+        onAccountRefresh={refreshAccountsHandler}
+      />
     </div>
   );
 }

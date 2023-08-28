@@ -24,6 +24,16 @@ const NewAccountModal = (props) => {
     return false;
   };
 
+  const resetFormValue = () => {
+    setFormValue({
+      name: "",
+      userName: "",
+      password: "",
+      category: "",
+      favourite: "",
+    });
+  };
+
   const [formValue, setFormValue] = useState({
     name: "",
     userName: "",
@@ -49,6 +59,8 @@ const NewAccountModal = (props) => {
       loadCategories().then((key) => {
         setCategories(key);
       });
+      resetFormValue();
+      setCategoryValue("");
     }
 
     setNameValid(validName);
@@ -71,13 +83,7 @@ const NewAccountModal = (props) => {
     setUserNameValid(true);
     setPasswordValid(true);
     setCategoryValid(true);
-    setFormValue({
-      name: "",
-      userName: "",
-      password: "",
-      category: "",
-      favourite: "",
-    });
+    resetFormValue();
     setCategoryValue("");
     props.onClose();
   };

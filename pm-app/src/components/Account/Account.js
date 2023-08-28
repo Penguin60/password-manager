@@ -24,9 +24,7 @@ const Account = (props) => {
 
   return (
     <div className="account" id={props.id} type="div">
-      <DeleteButton
-        id={props.id}
-      />
+      <DeleteButton id={props.id} onAccountRefresh={props.onAccountRefresh} />
       <div className="accountText">
         <AccountText
           className="accountName"

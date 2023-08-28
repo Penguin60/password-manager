@@ -1,7 +1,7 @@
 import Account from "./Account/Account";
 import "./AccountsDisplay.css";
 
-const AccountDisplay = ({ accounts }) => {
+const AccountDisplay = ({ accounts, onAccountRefresh }) => {
   return (
     <div className="accounts">
       {accounts.map((account) => (
@@ -13,6 +13,7 @@ const AccountDisplay = ({ accounts }) => {
           category={account.category}
           favourite={account.favourite}
           key={account.id}
+          onAccountRefresh={onAccountRefresh}
         />
       ))}
     </div>
