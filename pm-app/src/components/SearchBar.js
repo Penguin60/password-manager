@@ -1,8 +1,8 @@
 import TextField from "@mui/material/TextField";
-import AddButton from "./AddButton";
+import "./SearchBar.css"
 
 const SearchBar = ({ txt, onChange }) => {
-  const onSearchTxtChange = (event) => {
+  const searchTextChangeHandler = (event) => {
     onChange(event.target.value);
   };
 
@@ -15,7 +15,7 @@ const SearchBar = ({ txt, onChange }) => {
         fullWidth
         id="searchBar"
         placeholder="Search for an account..."
-        onChange={onSearchTxtChange}
+        onChange={searchTextChangeHandler}
         sx={{
           "& label": { paddingLeft: (theme) => theme.spacing(2) },
           "& input": { paddingLeft: (theme) => theme.spacing(3.5) },
@@ -27,9 +27,7 @@ const SearchBar = ({ txt, onChange }) => {
         InputProps={{
           disableUnderline: true,
         }}
-      >
-        <AddButton />
-      </TextField>
+      ></TextField>
     </div>
   );
 };
