@@ -24,7 +24,7 @@ const Account = (props) => {
 
   return (
     <div className="account" id={props.id} type="div">
-      <DeleteButton id={props.id} onAccountRefresh={props.onAccountRefresh} />
+      {/* <DeleteButton id={props.id} onAccountRefresh={props.onAccountRefresh} /> */}
       <div className="accountText">
         <AccountText
           className="accountName"
@@ -46,7 +46,7 @@ const Account = (props) => {
           onCopy={openSnackBarHandler}
         />
       </div>
-      <FavouriteButton favourite={props.favourite} id={props.id} />
+      {/* <FavouriteButton favourite={props.favourite} id={props.id} /> */}
       <Snackbar
         severity="success"
         open={snackbarOpen}

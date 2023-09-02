@@ -1,0 +1,9 @@
+.textDivider {
+  height: 50px !important;
+  position: relative;
+  align-self: center;
+  margin: 0px;
+  width: 1px;
+  border-color: rgba(0, 0, 0, 0.12);
+  background-color: rgba(179, 177, 177, 0.664);
+}

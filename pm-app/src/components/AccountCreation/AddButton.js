@@ -3,7 +3,6 @@ import Fab from "@mui/material/Fab";
 import AddIcon from "@mui/icons-material/Add";
 import Snackbar from "../Snackbar";
 import NewAccountModal from "./NewAccountModal";
-import { loadAccounts } from "../../firebase/FirebaseFunctions";
 import "./AddButton.css";
 
 const AddButton = (props) => {
@@ -29,7 +28,7 @@ const AddButton = (props) => {
   const formSubmitHandler = () => {
     setModalOpen(false);
     setSnackbarOpen(true);
-    props.onFormSubmit()
+    props.onFormSubmit();
   };
 
   return (

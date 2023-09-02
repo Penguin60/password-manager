@@ -1,11 +1,8 @@
-import {default as Seperator} from "@mui/material/Divider";
+import "./Divider.css"
 
 const Divider = () => {
   return (
-    <Seperator
-      orientation="vertical"
-      variant="middle"
-      flexItem
+    <div
       className="textDivider"
     />
   );
