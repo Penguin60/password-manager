@@ -4,10 +4,15 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import Button from "@mui/material/Button";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { addAccount, loadCategories } from "../../firebase/FirebaseFunctions";
 import "./NewAccountModal.css";
 import Categories from "./Categories";
+import IconButton from "@mui/material/IconButton";
+import InputAdornment from "@mui/material/InputAdornment";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import Casino from "@mui/icons-material/Casino";
 
 const NewAccountModal = (props) => {
   const [categoryValue, setCategoryValue] = useState("");
@@ -16,6 +21,34 @@ const NewAccountModal = (props) => {
   const [passwordValid, setPasswordValid] = useState(true);
   const [categoryValid, setCategoryValid] = useState(true);
   const [categories, setCategories] = useState([]);
+  const [showPassword, setShowPassword] = useState(false);
+  const [password, setPassword] = useState("");
+
+  const showPasswordHandler = () => setShowPassword((show) => !show);
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
+
+  const generatePassword = () => {
+    const length = 16;
+    const charsetLower = "abcdefghijklmnopqrstuvwxyz";
+    const charsetUpper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    const charsetNumbers = "0123456789";
+    const charset = charsetLower + charsetUpper + charsetNumbers;
+    let retVal = "";
+    retVal += charsetLower[Math.floor(Math.random() * charsetLower.length)];
+    retVal += charsetUpper[Math.floor(Math.random() * charsetUpper.length)];
+    retVal += charsetNumbers[Math.floor(Math.random() * charsetNumbers.length)];
+    for (let i = 3, n = charset.length; i < length; ++i) {
+      retVal += charset[Math.floor(Math.random() * n)];
+    }
+    retVal = retVal
+      .split("")
+      .sort(() => Math.random() - 0.5)
+      .join("");
+    setPassword(retVal);
+  };
 
   const validateInformation = (text) => {
     if (text && text.trim() != "" && text.length <= 50) {
@@ -70,6 +103,9 @@ const NewAccountModal = (props) => {
   };
 
   const changeHandler = (event) => {
+    if (event.target.name === "password") {
+      setPassword(event.target.value);
+    }
     setFormValue((prevFormValue) => {
       return {
         ...prevFormValue,
@@ -83,6 +119,7 @@ const NewAccountModal = (props) => {
     setUserNameValid(true);
     setPasswordValid(true);
     setCategoryValid(true);
+    setPassword("");
     resetFormValue();
     setCategoryValue("");
     props.onClose();
@@ -135,11 +172,30 @@ const NewAccountModal = (props) => {
               margin="dense"
               label="Password"
               fullWidth
-              type="password"
+              type={showPassword ? "text" : "password"}
               variant="outlined"
               color="success"
-              onChange={changeHandler}
               name="password"
+              value={password}
+              onChange={changeHandler}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="generate password"
+                      onClick={generatePassword}
+                    >
+                      <Casino />
+                    </IconButton>
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={showPasswordHandler}
+                    >
+                      {showPassword ? <Visibility /> : <VisibilityOff />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
             />
             <Categories
               onCategoryChange={categoryChangeHandler}

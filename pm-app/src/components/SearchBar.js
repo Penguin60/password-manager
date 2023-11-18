@@ -1,6 +1,7 @@
 import TextField from "@mui/material/TextField";
 import { Grid, Box } from "@mui/material";
 import "./SearchBar.css";
+import LogoutButton from "./UserAuthentication/LogoutButton";
 
 const SearchBar = ({ onChange }) => {
   const searchTextChangeHandler = (event) => {
@@ -10,7 +11,7 @@ const SearchBar = ({ onChange }) => {
   return (
     <Box sx={{ flexGrow: 1 }} className="searchWrapper">
       <Grid container alignContent="center" justifyContent="center">
-        <Grid item xs={11}>
+        <Grid item xs={10.5}>
         <TextField
           type="text"
           variant="standard"
@@ -31,6 +32,9 @@ const SearchBar = ({ onChange }) => {
             disableUnderline: true,
           }}
         ></TextField>
+        </Grid>
+        <Grid item xs={0.55} className="logoutButton">
+          <LogoutButton />
         </Grid>
       </Grid>
     </Box>

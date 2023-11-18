@@ -8,3 +8,8 @@
   align-self: center;
   margin-top: 20px;
 }
+
+.logoutButton {
+  margin-top: 18px !important;
+  margin-left: 0px !important;
+}

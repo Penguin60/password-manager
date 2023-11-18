@@ -1,4 +1,4 @@
-import { db } from "./Firebase"
+import { db } from "./Firebase";
 import "firebase/firestore";
 import {
   where,
@@ -7,17 +7,30 @@ import {
   addDoc,
   getDoc,
   deleteDoc,
+  collection,
+  getDocs,
+  query,
 } from "firebase/firestore";
-import { collection, getDocs } from "firebase/firestore";
+import {
+  createUserWithEmailAndPassword,
+  getAuth,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
+import firebase from "firebase/compat/app";
 
 export const loadAccounts = async () => {
-  const accountsList = await getDocs(collection(db, "accounts"));
+
+  const user =  firebase.auth().currentUser;
+  
+  const accountsList = await getDocs(
+    query(collection(db, "accounts"), where("userId", "==", user.email))
+  );
 
   const accountsArray = new Array();
 
   let i = 0;
 
-  accountsList.docs.forEach((doc) => {
+  accountsList.forEach((doc) => {
     const accountId = {
       id: doc.id,
     };
@@ -38,6 +51,7 @@ export const addAccount = async (name, userName, password, category) => {
     password: password,
     category: category,
     favourite: false,
+    userId: getAuth().currentUser.email,
   });
 };
 
@@ -60,7 +74,12 @@ export const returnPassword = async (id) => {
 };
 
 export const loadCategories = async () => {
-  const accountsList = await getDocs(collection(db, "accounts"));
+
+  const user =  firebase.auth().currentUser;
+  
+  const accountsList = await getDocs(
+    query(collection(db, "accounts"), where("userId", "==", user.email))
+  );
 
   const categoriesArray = new Array();
 
@@ -79,4 +98,34 @@ export const loadCategories = async () => {
   });
 
   return categoriesArray;
+};
+
+export const createUser = (email, password) => {
+  const auth = getAuth();
+  createUserWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
+      const user = userCredential.user;
+      console.log(user.getIdToken);
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.log(error);
+    });
+};
+
+export const loginUser = (email, password) => {
+  const auth = getAuth();
+  signInWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
+      const user = userCredential.user;
+      return true;
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.log(error);
+      return false;
+    });
+  return true;
 };

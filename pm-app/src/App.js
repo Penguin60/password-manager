@@ -1,55 +1,33 @@
 import "./App.css";
-import React, { useState, useEffect } from "react";
-import AccountDisplay from "./components/AccountsDisplay";
-import SearchBar from "./components/SearchBar";
-import { loadAccounts } from "./firebase/FirebaseFunctions";
-import AddButton from "./components/AccountCreation/AddButton";
+import FirebaseLogin from "./components/UserAuthentication/FirebaseLogin";
+import PasswordManager from "./components/PasswordManager";
+import { useEffect, useState } from "react";
+import firebase from "firebase/compat/app";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 function App() {
-  const [accounts, setAccounts] = useState([]);
-  const [filteredAccounts, setFilteredAccounts] = useState([]);
-  const [searchStr, setSearchStr] = useState("");
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [user, setUser] = useState("");
 
   useEffect(() => {
-    loadAccounts().then((value) => {
-      setAccounts(value);
-      setFilteredAccounts(value);
+    const auth = getAuth();
+
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setLoggedIn(true)
+        setUser(user.email);
+        console.log(user.email);
+      } else {
+        setUser("")
+        setLoggedIn(false)
+      }
     });
-  }, []);
-
-  const searchBarChangeHandler = async (searchTarget) => {
-    const lowerSearchStr = searchTarget.toLowerCase();
-
-    setSearchStr(lowerSearchStr);
-    if (lowerSearchStr) {
-      setFilteredAccounts(
-        accounts.filter((account) => {
-          return (
-            account.name.toLowerCase().includes(lowerSearchStr) ||
-            account.category.toLowerCase().includes(lowerSearchStr)
-          );
-        })
-      );
-    } else {
-      setFilteredAccounts(accounts);
-    }
-  };
-
-  const refreshAccountsHandler = () => {
-    loadAccounts().then((value) => {
-      setAccounts(value);
-      setFilteredAccounts(value);
-    });
-  };
+  });
 
   return (
     <div className="App">
-      <SearchBar txt={searchStr} onChange={searchBarChangeHandler} />
-      <AddButton onFormSubmit={refreshAccountsHandler} />
-      <AccountDisplay
-        accounts={filteredAccounts}
-        onAccountRefresh={refreshAccountsHandler}
-      />
+      {!loggedIn && <FirebaseLogin auth={firebase.auth()} />}
+      {loggedIn && <PasswordManager userEmail={user} />}
     </div>
   );
 }
