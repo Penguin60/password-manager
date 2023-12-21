@@ -6,6 +6,7 @@ import AccountText from "./AccountText";
 import Snackbar from "../Snackbar";
 import Divider from "./Divider";
 import "./Account.css";
+import AccountAvatar from "./AccountAvatar";
 
 const Account = (props) => {
   const [snackbarOpen, setSnackbarOpen] = useState(false);
@@ -24,6 +25,7 @@ const Account = (props) => {
 
   return (
     <div className="account" id={props.id} type="div">
+      <AccountAvatar imageID={props.imageID} />
       {/* <DeleteButton id={props.id} onAccountRefresh={props.onAccountRefresh} /> */}
       <div className="accountText">
         <AccountText
@@ -31,15 +33,15 @@ const Account = (props) => {
           data={props.name}
           onCopy={openSnackBarHandler}
         />
-        <Divider />
+        <Divider className="divider1"/>
         <AccountText
           className="accountUsername"
           data={props.userName}
           onCopy={openSnackBarHandler}
         />
-        <Divider />
+        <Divider className="divider2"/>
         <Password password={props.password} id={props.id} />
-        <Divider />
+        <Divider className="divider3"/>
         <AccountText
           className="accountCategory"
           data={props.category}

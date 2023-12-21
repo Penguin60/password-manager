@@ -4,6 +4,7 @@ import { getAnalytics } from "firebase/analytics";
 import { getFirestore } from "firebase/firestore";
 import { FIREBASE_MEASUREMENT_ID, FIREBASE_API_KEY, FIREBASE_MESSAGING_ID, FIREBASE_APP_ID } from "../config";
 import firebase from "firebase/compat/app";
+import { getStorage } from "firebase/storage";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -24,3 +25,7 @@ firebase.initializeApp(firebaseConfig)
 
 // Initialize Cloud Firestore and get a reference to the service
 export const db = getFirestore(initializeApp(firebaseConfig));
+
+const app = firebase.initializeApp(firebaseConfig);
+
+export const storage = getStorage(app);

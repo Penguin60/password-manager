@@ -16,6 +16,7 @@ const AccountDisplay = ({ accounts, onAccountRefresh }) => {
                 password={account.password}
                 category={account.category}
                 favourite={account.favourite}
+                imageID={account.imageID}
                 onAccountRefresh={onAccountRefresh}
               />
             </Grid>

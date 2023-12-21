@@ -17,11 +17,11 @@ import {
   signInWithEmailAndPassword,
 } from "firebase/auth";
 import firebase from "firebase/compat/app";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 export const loadAccounts = async () => {
+  const user = firebase.auth().currentUser;
 
-  const user =  firebase.auth().currentUser;
-  
   const accountsList = await getDocs(
     query(collection(db, "accounts"), where("userId", "==", user.email))
   );
@@ -44,12 +44,19 @@ export const loadAccounts = async () => {
   return accountsArray;
 };
 
-export const addAccount = async (name, userName, password, category) => {
+export const addAccount = async (
+  name,
+  userName,
+  password,
+  category,
+  imageID
+) => {
   const docRef = await addDoc(collection(db, "accounts"), {
     name: name,
     userName: userName,
     password: password,
     category: category,
+    imageID: imageID,
     favourite: false,
     userId: getAuth().currentUser.email,
   });
@@ -74,9 +81,8 @@ export const returnPassword = async (id) => {
 };
 
 export const loadCategories = async () => {
+  const user = firebase.auth().currentUser;
 
-  const user =  firebase.auth().currentUser;
-  
   const accountsList = await getDocs(
     query(collection(db, "accounts"), where("userId", "==", user.email))
   );
@@ -128,4 +134,33 @@ export const loginUser = (email, password) => {
       return false;
     });
   return true;
+};
+
+export const uploadProfilePicture = (file, id) => {
+  const auth = getAuth();
+  const user = auth.currentUser.email;
+
+  const storage = getStorage();
+  const storageRef = ref(storage, "profilePictures/" + user + "/" + id);
+
+  uploadBytes(storageRef, file).then((snapshot) => {
+    console.log("Uploaded a blob or file!");
+  });
+};
+
+export const getImage = (imageID) => {
+  const auth = getAuth();
+  const user = auth.currentUser.email;
+
+  const storage = getStorage();
+  const storageRef = ref(storage, "profilePictures/" + user + "/" + imageID);
+
+  // Get the download URL
+  return getDownloadURL(storageRef)
+    .then((url) => {
+      return url;
+    })
+    .catch((error) => {
+      console.error('Error getting download URL: ', error);
+    });
 };

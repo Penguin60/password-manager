@@ -13,6 +13,11 @@ import InputAdornment from "@mui/material/InputAdornment";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import Casino from "@mui/icons-material/Casino";
+import UploadButton from "./UploadButton";
+import { uploadProfilePicture } from "../../firebase/FirebaseFunctions";
+import { Avatar } from "@mui/material";
+import Box from "@mui/material/Box";
+import Grid from "@mui/material/Grid";
 
 const NewAccountModal = (props) => {
   const [categoryValue, setCategoryValue] = useState("");
@@ -23,11 +28,20 @@ const NewAccountModal = (props) => {
   const [categories, setCategories] = useState([]);
   const [showPassword, setShowPassword] = useState(false);
   const [password, setPassword] = useState("");
+  const [imageId, setImageId] = useState("");
+  const [file, setFile] = useState(null);
+  const [fileURL, setFileURL] = useState(null);
 
   const showPasswordHandler = () => setShowPassword((show) => !show);
 
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
+  };
+
+  const imageUploadHandler = (file, imageId) => {
+    setImageId(imageId);
+    setFile(file);
+    setFileURL(URL.createObjectURL(file));
   };
 
   const generatePassword = () => {
@@ -48,10 +62,16 @@ const NewAccountModal = (props) => {
       .sort(() => Math.random() - 0.5)
       .join("");
     setPassword(retVal);
+    setFormValue((prevFormValue) => {
+      return {
+        ...prevFormValue,
+        password: retVal,
+      };
+    });
   };
 
   const validateInformation = (text) => {
-    if (text && text.trim() != "" && text.length <= 50) {
+    if (text.trim() != "" && text.length <= 50) {
       return true;
     }
     return false;
@@ -65,6 +85,8 @@ const NewAccountModal = (props) => {
       category: "",
       favourite: "",
     });
+    setFile(null);
+    setFileURL(null);
   };
 
   const [formValue, setFormValue] = useState({
@@ -77,6 +99,8 @@ const NewAccountModal = (props) => {
 
   const createAccount = () => {
     const validName = validateInformation(formValue.name);
+    console.log(formValue.name);
+    console.log(validName);
     const validUserName = validateInformation(formValue.userName);
     const validPassword = validateInformation(formValue.password);
     const validCategory = validateInformation(categoryValue);
@@ -86,8 +110,10 @@ const NewAccountModal = (props) => {
         formValue.name,
         formValue.userName,
         formValue.password,
-        categoryValue
+        categoryValue,
+        imageId
       );
+      uploadProfilePicture(file, imageId);
       props.onFormSubmit();
       loadCategories().then((key) => {
         setCategories(key);
@@ -138,8 +164,21 @@ const NewAccountModal = (props) => {
   return (
     <>
       <Dialog open={props.open} onClose={formCloseHandler} fullWidth>
-        <DialogTitle>New Account</DialogTitle>
+        <DialogTitle sx={{ paddingBottom: 0 }}>New Account</DialogTitle>
         <DialogContent>
+          <Box
+            display="flex"
+            justifyContent="space-between"
+            width="100%"
+            marginBottom="1%"
+          >
+            <Avatar
+              src={file ? URL.createObjectURL(file) : undefined}
+              className="accountAvatar"
+              sx={{ width: 40, height: 40, marginLeft: "-15px" }}
+            />
+            <UploadButton onUpload={imageUploadHandler} />
+          </Box>
           <form onSubmit={createAccount}>
             <TextField
               error={!nameValid}
