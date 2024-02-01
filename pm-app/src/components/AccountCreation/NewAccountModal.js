@@ -113,10 +113,11 @@ const NewAccountModal = (props) => {
         categoryValue,
         imageId
       );
-      uploadProfilePicture(file, imageId);
-      props.onFormSubmit();
-      loadCategories().then((key) => {
-        setCategories(key);
+      uploadProfilePicture(file, imageId).then(() => {
+        props.onFormSubmit();
+        loadCategories().then((key) => {
+          setCategories(key);
+        });
       });
       resetFormValue();
       setCategoryValue("");
@@ -247,22 +248,24 @@ const NewAccountModal = (props) => {
         </DialogContent>
 
         <DialogActions>
-          <Button
-            onClick={formCloseHandler}
-            variant="text"
-            color="success"
-            className="button"
-          >
-            Cancel
-          </Button>
-          <Button
-            onClick={createAccount}
-            variant="contained"
-            color="success"
-            className="button"
-          >
-            Ok
-          </Button>
+          <Box marginLeft="auto" px={2} pb={1.1}>
+            <Button
+              onClick={formCloseHandler}
+              variant="text"
+              color="success"
+              className="button"
+            >
+              Cancel
+            </Button>
+            <Button
+              onClick={createAccount}
+              variant="contained"
+              color="success"
+              className="button"
+            >
+              Ok
+            </Button>
+          </Box>
         </DialogActions>
       </Dialog>
     </>

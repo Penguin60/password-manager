@@ -10,6 +10,7 @@ import {
   collection,
   getDocs,
   query,
+  updateDoc,
 } from "firebase/firestore";
 import {
   createUserWithEmailAndPassword,
@@ -62,6 +63,28 @@ export const addAccount = async (
   });
 };
 
+export const modifyAccount = async (
+  name,
+  userName,
+  password,
+  category,
+  imageID,
+  id
+) => {
+
+  const accountRef = doc(db, "accounts", id);
+
+  await updateDoc(accountRef, {
+    name: name,
+    userName: userName,
+    password: password,
+    category: category,
+    imageID: imageID,
+    favourite: false,
+    userId: getAuth().currentUser.email,
+  });
+};
+
 export const favouriteAccount = (id, favourited, setFavourited) => {
   const accountRef = doc(db, "accounts", id);
 
@@ -70,7 +93,7 @@ export const favouriteAccount = (id, favourited, setFavourited) => {
 };
 
 export const deleteAccount = async (id) => {
-  await deleteDoc(doc(db, "accounts", id));
+  return deleteDoc(doc(db, "accounts", id));
 };
 
 export const returnPassword = async (id) => {
@@ -143,7 +166,8 @@ export const uploadProfilePicture = (file, id) => {
   const storage = getStorage();
   const storageRef = ref(storage, "profilePictures/" + user + "/" + id);
 
-  uploadBytes(storageRef, file).then((snapshot) => {
+  // Return the Promise from uploadBytes
+  return uploadBytes(storageRef, file).then((snapshot) => {
     console.log("Uploaded a blob or file!");
   });
 };

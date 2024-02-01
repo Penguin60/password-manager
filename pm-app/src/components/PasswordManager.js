@@ -10,6 +10,7 @@ const PasswordManager = ({ userEmail }) => {
   const [accounts, setAccounts] = useState([]);
   const [filteredAccounts, setFilteredAccounts] = useState([]);
   const [searchStr, setSearchStr] = useState("");
+  const [deletedOpen, setDeletedOpen] = useState(false);
 
   useEffect(() => {
     loadAccounts().then((value) => {
@@ -42,6 +43,19 @@ const PasswordManager = ({ userEmail }) => {
     });
   };
 
+  const deleteAccountHandler = () => {
+    refreshAccountsHandler();
+    setDeletedOpen(true);
+  };
+
+  const deletedCloseHandler = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setDeletedOpen(false);
+  };
+
   return (
     <>
       <SearchBar txt={searchStr} onChange={searchBarChangeHandler} />
@@ -49,6 +63,9 @@ const PasswordManager = ({ userEmail }) => {
       <AccountDisplay
         accounts={filteredAccounts}
         onAccountRefresh={refreshAccountsHandler}
+        onDelete={deleteAccountHandler}
+        deletedOpen={deletedOpen}
+        onDeletedClose={deletedCloseHandler}
       />
     </>
   );

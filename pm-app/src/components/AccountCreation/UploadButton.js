@@ -50,13 +50,16 @@ const UploadButton = (props) => {
     <Box display="flex" alignItems="center">
       <IconButton
         component="label"
-        onChange={(event) => {
-          setImage(event.target.files[0]);
-        }}
         sx={{ width: 40, height: 40, border: "1px solid #2F7C31" }} // Add a border
       >
-        <CloudUploadIcon sx={{color: '#2F7C31'}}/>
-        <VisuallyHiddenInput type="file" />
+        <CloudUploadIcon sx={{ color: "#2F7C31" }} />
+        <VisuallyHiddenInput
+          accept="image/*"
+          type="file"
+          onChange={(event) => {
+            setImage(event.target.files[0]);
+          }}
+        />
       </IconButton>
     </Box>
   );

@@ -11,14 +11,36 @@
 }
 
 .accountText {
-  display: flex;
-  position: relative;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1fr 1px 1fr 1px 1fr 1px 1fr;
   align-items: center;
-  flex-grow: 0;
-  padding-right: 3%;
-  width: 70%;
+  width: 100%;
   margin: auto;
+  gap: 0;
+}
+
+.accountText > * {
+  max-width: 250px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  left: 10.5%;
+}
+
+.divider1,
+.divider2,
+.divider3 {
+  grid-column: 2 / 2;
+  background: #000;
+  height: 100%;
+}
+
+.divider2 {
+  grid-column: 4 / 4;
+}
+
+.divider3 {
+  grid-column: 6 / 6;
 }
 
 .accountName {
@@ -26,21 +48,6 @@
   position: relative;
   align-self: center;
   text-align: center;
-}
-
-.divider1 {
-  position: absolute;
-  left: 25%;
-}
-
-.divider2 {
-  position: absolute;
-  left: 50%;
-}
-
-.divider3 {
-  position: absolute;
-  left: 75%;
 }
 
 .accountName:hover {

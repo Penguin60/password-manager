@@ -12,6 +12,7 @@ const Categories = (props) => {
       freeSolo
       inputValue={props.inputValue}
       onInputChange={categoryChangeHandler}
+      defaultValue={props.defaultValue}
       renderInput={(params) => (
         <TextField
           error={!props.categoryValid}

@@ -5,13 +5,13 @@ import { Slide } from "@mui/material";
 
 const Snackbar = (props) => {
   const Alert = React.forwardRef(function Alert(props, ref) {
-    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+    return <MuiAlert elevation={0} ref={ref} variant="filled" {...props} />;
   });
 
   return (
     <Bar
       open={props.open}
-      autoHideDuration={4000}
+      autoHideDuration={2000}
       onClose={props.onClose}
       TransitionComponent={Slide}
     >
