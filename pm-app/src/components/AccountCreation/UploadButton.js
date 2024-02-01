@@ -57,6 +57,11 @@ const UploadButton = (props) => {
           accept="image/*"
           type="file"
           onChange={(event) => {
+            const file = event.target.files[0];
+            const maxSize = 50 * 1024 * 1024; // 50MB in bytes
+            if (file.size > maxSize) {
+              return;
+            }
             setImage(event.target.files[0]);
           }}
         />

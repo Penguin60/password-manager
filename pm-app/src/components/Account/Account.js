@@ -1,5 +1,4 @@
 import { useState } from "react";
-import FavouriteButton from "../AccountManagement/FavouriteButton";
 import Password from "./Password";
 import AccountText from "./AccountText";
 import Snackbar from "../Snackbar";
@@ -7,7 +6,6 @@ import Divider from "./Divider";
 import "./Account.css";
 import AccountAvatar from "./AccountAvatar";
 import ModificationModal from "./AccountModification/ModificationModal";
-import { useEffect } from "react";
 
 const Account = (props) => {
   const [snackbarOpen, setSnackbarOpen] = useState(false);
